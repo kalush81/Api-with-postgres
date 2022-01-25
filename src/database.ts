@@ -17,6 +17,6 @@ const client = new Pool({
   password: POSTGRES_PASSWORD
 });
 
-client.connect();
+//client.connect();
 
 export default client
