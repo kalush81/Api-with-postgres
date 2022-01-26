@@ -34,7 +34,31 @@ export class BookStore {
       return result.rows[0]
       
     } catch (error) {
-      throw new Error(`couldn't create book, ${b.title}, ${error}`)
+      throw new Error(`couldn't create book ${b.title}. Error: ${error}`)
+    }
+  }
+  async delete(id: string): Promise<Book> { 
+    try {
+      const conn = await client.connect()
+      const sql = 'DELETE FROM books WHERE id=($1)'
+      const result = await conn.query(sql, [id])
+      conn.release();
+      return result.rows[0]
+      
+    } catch (error) {
+      throw new Error(`couldn't delete book with id ${id}. Error: ${error}`)
+    }
+  }
+  async show(id: string): Promise<Book> {
+    try {
+    const sql = 'SELECT * FROM books WHERE id=($1)'
+    const conn = await client.connect()
+    const result = await conn.query(sql, [id])
+    conn.release()
+      return result.rows[0]
+      
+    } catch (err) {
+        throw new Error(`Could not find book ${id}. Error: ${err}`)
     }
   }
 
