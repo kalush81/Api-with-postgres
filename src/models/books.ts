@@ -1,4 +1,5 @@
 import { query } from "express";
+//@ts-ignore
 import client from "../database";
 
 export type Book = {
@@ -14,6 +15,7 @@ export class BookStore {
   //get all books 
   async index(): Promise<Book[]> { 
     try {
+      //@ts-ignore
       const conn = await client.connect()
       const sql = 'SELECT * FROM books'
       const result = await conn.query(sql)
@@ -26,6 +28,7 @@ export class BookStore {
   }
   async create(b: Book): Promise<Book> { 
     try {
+      //@ts-ignore
       const conn = await client.connect()
       const sql = 'INSERT INTO books (title, author, total_pages, type, summary) VALUES($1, $2, $3, $4, $5) RETURNING*'
       const props = [b.title, b.author, b.total_pages, b.type, b.summary]
@@ -39,6 +42,7 @@ export class BookStore {
   }
   async delete(id: string): Promise<Book> { 
     try {
+      //@ts-ignore
       const conn = await client.connect()
       const sql = 'DELETE FROM books WHERE id=($1)'
       const result = await conn.query(sql, [id])
@@ -51,7 +55,8 @@ export class BookStore {
   }
   async show(id: string): Promise<Book> {
     try {
-    const sql = 'SELECT * FROM books WHERE id=($1)'
+      const sql = 'SELECT * FROM books WHERE id=($1)'
+      //@ts-ignore
     const conn = await client.connect()
     const result = await conn.query(sql, [id])
     conn.release()

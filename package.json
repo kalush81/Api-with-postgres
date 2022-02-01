@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "jasmine": "NODE_ENV=test jasmine",
-    "test": "npm run build && npm run jasmine",
+    "test": "ENV=test db-migrate --env test up && jasmine-ts && db-migrate --env test resett",
     "start": "nodemon ./build/index.js",
     "lint": "eslint . --ext .ts",
     "build": "tsc",
@@ -29,6 +28,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jasmine": "^4.0.1",
     "jasmine-spec-reporter": "^6.0.0",
+    "jasmine-ts": "^0.4.0",
+    "nodemon": "^2.0.15",
     "prettier": "^2.5.1",
     "supertest": "^6.1.6",
     "ts-node": "^10.4.0",
