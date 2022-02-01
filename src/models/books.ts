@@ -3,7 +3,7 @@ import { query } from "express";
 import client from "../database";
 
 export type Book = {
-  id: Number, 
+  id?: number, 
   title: string, 
   author: string, 
   total_pages: number, 
