@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "ENV=test db-migrate --env test up && jasmine-ts && db-migrate --env test resett",
+    "test": "ENV=test db-migrate --env test up && ts-node node_modules/jasmine/bin/jasmine && db-migrate db:drop test",
     "start": "nodemon ./build/index.js",
     "lint": "eslint . --ext .ts",
     "build": "tsc",
