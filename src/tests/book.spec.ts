@@ -34,17 +34,17 @@ describe('drop book model', () => {
   });
 
   it('get one book by id', async() => { 
-    book.show("1");
-    const result = await book.index()
+    //book.show("1");
+    const result = await book.show("1")
 
-    expect(result).toEqual([{
+    expect(result).toEqual({
       id: 1,
       title: 'Bridge to Terabithia',
       total_pages: 250,
       author: 'Katherine Paterson',
       type: 'Childrens',
       summary: ''
-    }]);
+    });
   })
 
   it('delete method should remove the book', async () => {

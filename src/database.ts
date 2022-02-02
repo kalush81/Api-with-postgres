@@ -3,7 +3,7 @@ import { Pool } from 'pg';
 
 dotenv.config();
 //@ts-ignore
-let client;
+let client: Pool | undefined;
 
 const {
   POSTGRES_HOST,
@@ -33,4 +33,4 @@ if (ENV == 'test') {
   });
 }
 
-export default client 
+export default client
