@@ -1,27 +1,21 @@
-import express, { Request, Response } from 'express'
-import bodyParser from 'body-parser'
-import { BookStore } from './models/books'
-import { routes } from './routes/appRoutes';
+import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
+import { BookStore } from './models/book/book-model';
+import { bookRoutes } from './models/book/book-handler';
 
 const bookStore = new BookStore();
 
-const app: express.Application = express()
-const address: string = "localhost:3000"
+const app: express.Application = express();
+const address: string = 'localhost:3000';
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
-routes(app);
+bookRoutes(app);
 
-app.get('/', async function (req: Request, res: Response):Promise<void> {
-  
-  try {
-    const books = await bookStore.index()
-    res.send(books)
-  } catch (error) {
-    res.status(500).send('ups')
-  }
-})
+app.get('/', async function (req: Request, res: Response): Promise<void> {
+  res.send('main route');
+});
 
 app.listen(3000, function () {
-    console.log(`starting app on: ${address}`)
-})
+  console.log(`starting app on: ${address}`);
+});

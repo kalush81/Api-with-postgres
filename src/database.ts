@@ -16,15 +16,15 @@ const {
   POSTGRES_PASSWORD_TEST
 } = process.env;
 
-if (ENV == 'dev') { 
+if (ENV == 'dev') {
   client = new Pool({
     host: POSTGRES_HOST,
     database: POSTGRES_DB,
     user: POSTGRES_USER,
-    password: POSTGRES_PASSWORD,
+    password: POSTGRES_PASSWORD
   });
 }
-if (ENV == 'test') { 
+if (ENV == 'test') {
   client = new Pool({
     host: POSTGRES_HOST,
     database: POSTGRES_DB_TEST,
@@ -33,4 +33,4 @@ if (ENV == 'test') {
   });
 }
 
-export default client
+export default client;

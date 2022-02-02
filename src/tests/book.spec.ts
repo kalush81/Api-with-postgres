@@ -1,11 +1,10 @@
-import { BookStore } from "../models/books";
+import { BookStore } from '../models/book/book-model';
 
 console.log(process.env.ENV);
 
-const book = new BookStore;
+const book = new BookStore();
 
 describe('drop book model', () => {
-  
   it('should hava an index method', () => {
     expect(book.index).toBeDefined;
   });
@@ -33,9 +32,9 @@ describe('drop book model', () => {
     });
   });
 
-  it('get one book by id', async() => { 
+  it('get one book by id', async () => {
     //book.show("1");
-    const result = await book.show("1")
+    const result = await book.show('1');
 
     expect(result).toEqual({
       id: 1,
@@ -45,13 +44,12 @@ describe('drop book model', () => {
       type: 'Childrens',
       summary: ''
     });
-  })
+  });
 
   it('delete method should remove the book', async () => {
-    await book.delete("1");
-    const result = await book.index()
+    await book.delete('1');
+    const result = await book.index();
 
     expect(result).toEqual([]);
   });
-
 });
