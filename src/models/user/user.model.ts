@@ -1,6 +1,7 @@
 import client from '../../database';
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -11,14 +12,14 @@ export type User = {
   username: string,
   password: string
 };
-type userDB = {
+type UserDB = {
   id: number,
   username: string,
   password_digest: string
 }
 
 export class UserStore {
-  async create(u: User): Promise<userDB | undefined> {
+  async create(u: User): Promise<UserDB | undefined> {
     try {
       if (client) {
         const conn = await client.connect()
@@ -30,7 +31,7 @@ export class UserStore {
         );
   
         const result = await conn.query(sql, [u.username, hash])
-        const user: userDB = result.rows[0]
+        const user: UserDB = result.rows[0]
   
         conn.release()
   
@@ -43,7 +44,7 @@ export class UserStore {
     } 
   }
 
-  async authenticate(username: string, password: string): Promise<User | null> {
+  async authenticate(username: string, password: string): Promise<UserDB | null> {
     if (client) { 
       const conn = await client.connect()
       const sql = 'SELECT password_digest FROM users WHERE username=($1)'
@@ -54,7 +55,7 @@ export class UserStore {
   
       if(result.rows.length) {
   
-        const user = result.rows[0]
+        const user: UserDB = result.rows[0]
   
         console.log(user)
   
