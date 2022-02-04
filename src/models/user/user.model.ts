@@ -42,34 +42,27 @@ export class UserStore {
       throw new Error(`unable create user (${u.username}): ${err}`)
     } 
   }
-  //async delete(id: string): Promise<User | undefined> {
-    // try {
-    //   if (client) {
-    //     const conn = await client.connect();
-    //     const sql = 'DELETE FROM books WHERE id=($1)';
-    //     const result = await conn.query(sql, [id]);
-    //     conn.release();
-    //     return result.rows[0];
-    //   } else {
-    //     return undefined;
-    //   }
-    // } catch (error) {
-    //   throw new Error(`couldn't delete book with id ${id}. Error: ${error}`);
-    // }
-  //}
-  // async show(id: string): Promise<Book | undefined> {
-  //   try {
-  //     if (client) {
-  //       const sql = 'SELECT * FROM books WHERE id=($1)';
-  //       const conn = await client.connect();
-  //       const result = await conn.query(sql, [id]);
-  //       conn.release();
-  //       return result.rows[0];
-  //     } else {
-  //       return undefined;
-  //     }
-  //   } catch (err) {
-  //     throw new Error(`Could not find book ${id}. Error: ${err}`);
-  //   }
-  // }
+
+  async authenticate(username: string, password: string): Promise<User | null> {
+    if (client) { 
+      const conn = await client.connect()
+      const sql = 'SELECT password_digest FROM users WHERE username=($1)'
+  
+      const result = await conn.query(sql, [username])
+  
+      console.log(password+pepper)
+  
+      if(result.rows.length) {
+  
+        const user = result.rows[0]
+  
+        console.log(user)
+  
+        if (bcrypt.compareSync(password+pepper, user.password_digest)) {
+          return user
+        }
+      }
+    }
+    return null
+  }
 }
