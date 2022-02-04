@@ -1,10 +1,15 @@
+import dotenv from 'dotenv'
+import client from '../database';
 import { BookStore } from '../models/book/book-model';
 
-console.log(process.env.ENV);
+dotenv.config();
+
+console.log('NODE_ENV', process.env.ENV);
 
 const book = new BookStore();
 
-describe('drop book model', () => {
+describe('testing bookstore schema', () => {
+
   it('should hava an index method', () => {
     expect(book.index).toBeDefined;
   });

@@ -1,8 +1,12 @@
 import express, { Response, Request } from 'express';
+import { Book, BookStore } from './book-model';
+
+const book = new BookStore()
 
 const showAll = async (_req: Request, res: Response) => {
   try {
-    res.send('this is the INDEX route');
+    const result = await book.index()
+    res.json(result);
   } catch (err) {
     res.status(400);
     res.json(err);

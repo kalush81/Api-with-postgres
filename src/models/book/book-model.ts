@@ -19,9 +19,11 @@ export class BookStore {
         const result = await conn.query(sql);
         conn.release();
         return result.rows;
-      } else {
-        return undefined;
       }
+      else { 
+        return undefined
+      }
+      
     } catch (error) {
       throw new Error(`Could not get books: ${error}`);
     }
