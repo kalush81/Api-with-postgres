@@ -1,5 +1,6 @@
 import express, { Response, Request } from 'express';
 import { Book, BookStore } from './book-model';
+import { verifyAuthToken } from '../../middlewares/verifyAuthTokenMIddleware';
 
 const book = new BookStore()
 
@@ -49,10 +50,13 @@ const destroy = async (_req: Request, res: Response) => {
   }
 };
 
+
+//todo test all controllers
+
 export const bookRoutes = (app: express.Application) => {
   app.get('/books', showAll);
   app.get('/books/:id', showOne);
-  app.post('/books', create);
-  app.put('/books/:id', edit);
-  app.delete('/books/:id', destroy);
+  app.post('/books', verifyAuthToken, create);
+  app.put('/books/:id',verifyAuthToken,  edit);
+  app.delete('/books/:id', verifyAuthToken, destroy);
 };

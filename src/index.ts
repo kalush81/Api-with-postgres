@@ -1,18 +1,25 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import { BookStore } from './models/book/book-model';
 import { bookRoutes } from './models/book/book-handler';
+import { userRoutes } from './models/user/user-handler'
 import cors from 'cors';
-
-const bookStore = new BookStore();
 
 const app: express.Application = express();
 const address: string = 'localhost:3000';
 
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
-app.use(cors())
+//app.use(cors())
+
+app.use((req, res, next) => {
+  console.log(req.headers)
+  next()
+ })
 
 bookRoutes(app);
+userRoutes(app);
 
 app.get('/', async function (req: Request, res: Response): Promise<void> {
   res.send('main route');
